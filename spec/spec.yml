@@ -14,6 +14,11 @@ vm_groups:
     count: 1
     sku: Standard_DS1_v1
     type: vm # this can be vm or vmss
+    os_profile:
+      linux:
+        ssh:
+          public_keys:
+            - (( key1.public_key ))
     storage:
       image:
         offer: offer1
@@ -38,6 +43,8 @@ vm_groups:
       - name: security_group_1
     roles:
       - name: builtin/jumpbox
+        variables:
+          ssh_public_key: (( key1.public_key ))
 
   - name: d2v3_group
     meta:
@@ -100,5 +107,8 @@ databases:
     username: "binxi"
     password: "abcd1234!"
 
-
-
+variables:
+  - name: password1
+    type: password
+  - name: key1
+    type: ssh_key
